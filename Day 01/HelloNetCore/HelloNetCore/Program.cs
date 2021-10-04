@@ -7,6 +7,7 @@ namespace HelloNetCore
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            Console.WriteLine("Ma Hamatsav, Olam");
         }
     }
 }
