@@ -6,9 +6,15 @@
         xmlns:local="clr-namespace:FunWithTpl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button x:Name="btnGo" FontSize="24" Padding="10" Margin="10" Click="btnGo_Click2">Start</Button>
+            <TextBlock x:Name="txtPleaseWait" Text="Please wait..." FontSize="16" VerticalAlignment="Center" Visibility="Collapsed"></TextBlock>
+        </StackPanel>
+        <ProgressBar x:Name="progressBar" DockPanel.Dock="Top" Height="20" Margin="4" IsIndeterminate="False"></ProgressBar>
+        <ListBox x:Name="lstResults"></ListBox>
 
-    </Grid>
+    </DockPanel>
         
     
 </Window>
