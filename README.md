@@ -13,3 +13,8 @@ and also - through `Whatsapp`
 * Entity Framework core
 
 # Daily Summaries
+- [01 - The web, Git and TPL](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Day-01---Git,-TPL)
+
+
+# Class Exercises
+- [01 - TPL](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Exercise-1---TPL)
