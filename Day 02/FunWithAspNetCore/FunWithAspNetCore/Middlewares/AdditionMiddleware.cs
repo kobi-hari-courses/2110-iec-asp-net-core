@@ -14,6 +14,7 @@ namespace FunWithAspNetCore.Middlewares
         public AdditionMiddleware(RequestDelegate next)
         {
             _next = next;
+            Console.WriteLine("Addition middleware created");
         }
 
         public async Task Invoke(HttpContext context)
@@ -22,7 +23,6 @@ namespace FunWithAspNetCore.Middlewares
             var result = url
                 .Split("/")
                 .Where(s => !string.IsNullOrWhiteSpace(s))
-                .Skip(1)
                 .Select(s => int.Parse(s))
                 .Sum();
             await context.Response.WriteAsync("The answer is : " + result);
@@ -33,12 +33,7 @@ namespace FunWithAspNetCore.Middlewares
     {
         public static IApplicationBuilder UseAddition(this IApplicationBuilder app, string path = "add")
         {
-            app.MapWhen(ctxt => 
-            {
-                var url = ctxt.Request.Path.ToString();
-                var res = url.StartsWith("/" + path);
-                return res;
-            }, 
+            app.Map($"/{path}", 
             builder =>
             {
                 builder.UseMiddleware<AdditionMiddleware>();
