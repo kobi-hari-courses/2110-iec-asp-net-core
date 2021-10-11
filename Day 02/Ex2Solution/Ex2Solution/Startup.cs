@@ -1,3 +1,4 @@
+using Ex2Solution.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,8 @@ namespace Ex2Solution
                     await context.Response.WriteAsync("All is well with the server");
                 });
             });
+
+            app.UseMultiTable();
 
             app.Run(async context =>
             {
