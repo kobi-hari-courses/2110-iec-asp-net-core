@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Ex2Solution.Service;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -9,43 +10,21 @@ namespace Ex2Solution.Middlewares
 {
     public class MultiTableMiddleware
     {
-        public MultiTableMiddleware(RequestDelegate next)
-        {
+        private MultiplicationService _calcService;
 
+        public MultiTableMiddleware(RequestDelegate next, 
+            MultiplicationService calcService)
+        {
+            _calcService = calcService;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, HtmlTableService htmlService, ParameterService paramService)
         {
-            var sizeString = context.Request.Query["size"].ToString();
-            if (int.TryParse(sizeString, out int size))
-            {
-                await context.Response.WriteAsync("<table>");
-                await context.Response.WriteAsync("<thead><tr>");
+            // TODO: Read this from the previous middleware
+            var size = paramService.Size;
 
-                await context.Response.WriteAsync($"<th></th>");
-                for (int i = 1; i <= size; i++)
-                {
-                    await context.Response.WriteAsync($"<th>{i}</th>");
-                }
-
-                for (int i = 1; i <= size; i++)
-                {
-                    await context.Response.WriteAsync($"<tr>");
-                    await context.Response.WriteAsync($"<th>{i}</th>");
-
-                    for (int j = 1; j <= size; j++)
-                    {
-                        await context.Response.WriteAsync($"<td>{i*j}</td>");
-                    }
-
-                    await context.Response.WriteAsync($"</tr>");
-                }
-
-                await context.Response.WriteAsync("</tr></thead>");
-
-                await context.Response.WriteAsync("</table>");
-            }
-
+            var table = _calcService.CreateTable(size);
+            await htmlService.WriteToHtml(context, table);
         }
 
     }
@@ -56,6 +35,7 @@ namespace Ex2Solution.Middlewares
         {
             app.Map("/multable", builder =>
             {
+                builder.UseMiddleware<SizeReaderMiddleware>();
                 builder.UseMiddleware<MultiTableMiddleware>();
             });
 
