@@ -14,7 +14,8 @@ and also - through `Whatsapp`
 
 # Daily Summaries
 - [01 - The web, Git and TPL](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Day-01---Git,-TPL)
-
+- [02 - Middlewares and Dependency Injection](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Day-02-Middlewares-and-DI)
 
 # Class Exercises
 - [01 - TPL](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Exercise-1---TPL)
+- [02 - Middlewares](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Exercise-2---Middlewares)
