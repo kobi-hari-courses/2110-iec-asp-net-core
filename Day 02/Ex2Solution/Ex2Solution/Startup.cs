@@ -21,20 +21,25 @@ namespace Ex2Solution
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.Use(async (context, next) =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                context.Response.Headers.Add("now", DateTime.Now.ToString());
+                await next();
+            });
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
+            app.Map("/health", builder =>
             {
-                endpoints.MapGet("/", async context =>
+                builder.Run(async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("All is well with the server");
                 });
             });
+
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("");
+            });
+
         }
     }
 }
