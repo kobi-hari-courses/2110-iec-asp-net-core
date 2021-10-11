@@ -1,3 +1,4 @@
+using FunWithAspNetCore.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,13 @@ namespace FunWithAspNetCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseAddition("sum");
+
 
             app.Use(async (context, next) =>
             {
@@ -44,7 +52,7 @@ namespace FunWithAspNetCore
                     await ctxt.Response.WriteAsync("<h4>Wow Wow Wow, what a big request!!!</h4>");
                 });
             });
-           
+
 
             app.Run(async context =>
             {
@@ -52,10 +60,6 @@ namespace FunWithAspNetCore
             });
 
 
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
 
             //app.UseRouting();
 
