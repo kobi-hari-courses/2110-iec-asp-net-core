@@ -27,7 +27,7 @@ namespace FunWithWebApi
         {
             services.AddHostedService<InitService>();
 
-            services.AddSingleton<IMovieRepositoryService, MovieInMemoryRepositoryService>();
+            services.AddSingleton<IMovieRepositoryService, MovieJsonFileRepositoryService>();
             services.AddControllers();
         }
 

@@ -14,6 +14,7 @@ namespace FunWithWebApi.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly IMovieRepositoryService _repository;
+        private object _mutex = new object();
 
         public MoviesController(IMovieRepositoryService repository)
         {
