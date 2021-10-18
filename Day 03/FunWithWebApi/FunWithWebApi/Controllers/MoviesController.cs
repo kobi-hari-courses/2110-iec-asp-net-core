@@ -21,51 +21,59 @@ namespace FunWithWebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Movie>> GetAllMovies()
+        public async Task<ActionResult<IEnumerable<Movie>>> GetAllMovies()
         {
-            return Ok(_repository.GetAll());
+            return Ok(await _repository.GetAll());
         }
 
         [HttpGet("{index}", Name = nameof(GetMovieAtIndex))]
-        public ActionResult<Movie> GetMovieAtIndex(int index)
+        public async Task<ActionResult<Movie>> GetMovieAtIndex(int index)
         {
-            if (index < _repository.Count)
+            var count = await _repository.GetCount();
+
+            if (index < count)
             {
-                return Ok(_repository.GetMovie(index));
+                return Ok(await _repository.GetMovie(index));
             }
 
-            return NotFound($"Must be between 0 and {_repository.Count - 1}");
+            return NotFound($"Must be between 0 and {count - 1}");
         }
 
         [HttpPost()]
-        public ActionResult<Movie> AddMovie([FromBody] Movie movie)
+        public async Task<ActionResult<Movie>> AddMovie([FromBody] Movie movie)
         {
-            _repository.AddMovie(movie);
-            return CreatedAtRoute(nameof(GetMovieAtIndex), new { index = _repository.GetIndexOfMovie(movie.Caption) }, movie);
+            await _repository.AddMovie(movie);
+            var index = await _repository.GetIndexOfMovie(movie.Caption);
+
+            return CreatedAtRoute(nameof(GetMovieAtIndex), new { index = index }, movie);
         }
 
         [HttpPut("{index}")]
-        public ActionResult<Movie> ModifyMovie(int index, [FromBody] Movie movie)
+        public async Task<ActionResult<Movie>> ModifyMovie(int index, [FromBody] Movie movie)
         {
-            if (index >= _repository.Count)
+            var count = await _repository.GetCount();
+
+            if (index >= count)
             {
-                return NotFound($"Must be between 0 and {_repository.Count - 1}");
+                return NotFound($"Must be between 0 and {count - 1}");
             }
 
-            _repository.UpdateMovie(index, movie);
+            await _repository.UpdateMovie(index, movie);
             return Ok(movie);
         }
         
         [HttpDelete("{index}")]
-        public ActionResult<Movie> DeleteMovie(int index)
+        public async Task<ActionResult<Movie>> DeleteMovie(int index)
         {
-            if (index >= _repository.Count)
+            var count = await _repository.GetCount();
+
+            if (index >= count)
             {
-                return NotFound($"Must be between 0 and {_repository.Count - 1}");
+                return NotFound($"Must be between 0 and {count - 1}");
             }
 
-            var movie = _repository.GetMovie(index);
-            _repository.DeleteMovie(index);
+            var movie = await _repository.GetMovie(index);
+            await _repository.DeleteMovie(index);
             return Ok(movie);
 
         }

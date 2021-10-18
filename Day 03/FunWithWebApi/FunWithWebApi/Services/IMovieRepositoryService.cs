@@ -1,21 +1,25 @@
 ﻿using FunWithWebApi.Entities.Entities;
+using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FunWithWebApi.Services
 {
-    public interface IMovieRepositoryService
+    public interface IMovieRepositoryService: IHostedService
     {
-        int Count { get; }
+        Task<int> GetCount();
 
-        void AddMovie(Movie movie);
-        IEnumerable<Movie> GetAll();
-        Movie GetMovie(int index);
+        Task AddMovie(Movie movie);
+        
+        Task<IEnumerable<Movie>> GetAll();
 
-        int GetIndexOfMovie(string movieName);
+        Task<Movie> GetMovie(int index);
 
-        void UpdateMovie(int index, Movie movie);
+        Task<int> GetIndexOfMovie(string movieName);
 
-        void DeleteMovie(int index);
+        Task UpdateMovie(int index, Movie movie);
+
+        Task DeleteMovie(int index);
     }
 
 }
