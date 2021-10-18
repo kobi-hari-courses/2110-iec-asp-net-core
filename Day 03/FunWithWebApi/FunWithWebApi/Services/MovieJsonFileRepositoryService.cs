@@ -21,7 +21,6 @@ namespace FunWithWebApi.Services
 
         private async Task<List<Movie>> _readAllMovies()
         {
-            await Task.Delay(10000);
             var json = await File.ReadAllTextAsync(fileName);
             var res = JsonSerializer.Deserialize<List<Movie>>(json, jsonOptions);
             return res;
