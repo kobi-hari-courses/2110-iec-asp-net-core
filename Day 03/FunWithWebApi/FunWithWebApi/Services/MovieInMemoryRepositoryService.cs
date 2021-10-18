@@ -12,19 +12,19 @@ namespace FunWithWebApi.Services
         {
             new Movie
             {
-                DisplayName = "Pulp Fiction",
+                Caption = "Pulp Fiction",
                 Description = "A very good movie",
                 PublishedOn = new DateTime(1994, 10, 15)
             },
             new Movie
             {
-                DisplayName = "Kill Bill 1",
+                Caption = "Kill Bill 1",
                 Description = "A very good movie",
                 PublishedOn = new DateTime(2003, 12, 10)
             },
             new Movie
             {
-                DisplayName = "Kill Bill 2",
+                Caption = "Kill Bill 2",
                 Description = "A very good movie",
                 PublishedOn = new DateTime(2004, 8, 30)
             },
@@ -49,7 +49,7 @@ namespace FunWithWebApi.Services
 
         public int GetIndexOfMovie(string movieName)
         {
-            return _movies.FindIndex(m => m.DisplayName == movieName);
+            return _movies.FindIndex(m => m.Caption == movieName);
         }
 
         public void UpdateMovie(int index, Movie movie)

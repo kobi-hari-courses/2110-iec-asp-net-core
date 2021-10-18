@@ -41,7 +41,7 @@ namespace FunWithWebApi.Controllers
         public ActionResult<Movie> AddMovie([FromBody] Movie movie)
         {
             _repository.AddMovie(movie);
-            return CreatedAtRoute(nameof(GetMovieAtIndex), new { index = _repository.GetIndexOfMovie(movie.DisplayName) }, movie);
+            return CreatedAtRoute(nameof(GetMovieAtIndex), new { index = _repository.GetIndexOfMovie(movie.Caption) }, movie);
         }
 
         [HttpPut("{index}")]
@@ -55,7 +55,7 @@ namespace FunWithWebApi.Controllers
             _repository.UpdateMovie(index, movie);
             return Ok(movie);
         }
-
+        
         [HttpDelete("{index}")]
         public ActionResult<Movie> DeleteMovie(int index)
         {

@@ -8,9 +8,13 @@ namespace FunWithWebApi.Entities.Entities
 {
     public class Movie
     {
-        public string DisplayName { get; set; }
+        public int Id { get; set; }
+
+        public string Caption { get; set; }
 
         public string Description { get; set; }
+
+        public string Poster { get; set; }
 
         public DateTime PublishedOn { get; set; }
     }
