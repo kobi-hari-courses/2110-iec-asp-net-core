@@ -19,3 +19,4 @@ and also - through `Whatsapp`
 # Class Exercises
 - [01 - TPL](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Exercise-1---TPL)
 - [02 - Middlewares](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Exercise-2---Middlewares)
+- [03 - Web API](https://github.com/kobi2294/Course-2110-AspNetCore/wiki/Exercise-3---Web-API)
