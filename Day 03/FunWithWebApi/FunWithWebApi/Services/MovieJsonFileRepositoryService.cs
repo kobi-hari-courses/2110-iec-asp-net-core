@@ -17,8 +17,11 @@ namespace FunWithWebApi.Services
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
+        private SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+
         private async Task<List<Movie>> _readAllMovies()
         {
+            await Task.Delay(10000);
             var json = await File.ReadAllTextAsync(fileName);
             var res = JsonSerializer.Deserialize<List<Movie>>(json, jsonOptions);
             return res;
@@ -27,53 +30,110 @@ namespace FunWithWebApi.Services
         private async Task _writeAllMovies(List<Movie> movies)
         {
             var json = JsonSerializer.Serialize(movies, jsonOptions);
-            await File.WriteAllTextAsync(fileName, json);          
+            await File.WriteAllTextAsync(fileName, json);
         }
 
         public async Task AddMovie(Movie movie)
         {
-            var movies = await _readAllMovies();
-            movies.Add(movie);
-            await _writeAllMovies(movies);
+            await _semaphore.WaitAsync();
+            try
+            {
+                var movies = await _readAllMovies();
+                movies.Add(movie);
+                await _writeAllMovies(movies);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task DeleteMovie(int index)
         {
-            var movies = await _readAllMovies();
-            movies.RemoveAt(index);
-            await _writeAllMovies(movies);
+            await _semaphore.WaitAsync();
+            try
+            {
+                var movies = await _readAllMovies();
+                movies.RemoveAt(index);
+                await _writeAllMovies(movies);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task<IEnumerable<Movie>> GetAll()
         {
-            var movies = await _readAllMovies();
-            return movies;
+            await _semaphore.WaitAsync();
+            try
+            {
+                var movies = await _readAllMovies();
+                return movies;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task<int> GetCount()
         {
-            var movies = await _readAllMovies();
-            return movies.Count;
+            await _semaphore.WaitAsync();
+            try
+            {
+                var movies = await _readAllMovies();
+                return movies.Count;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task<int> GetIndexOfMovie(string movieName)
         {
-            var movies = await _readAllMovies();
-            return movies.FindIndex(m => m.Caption == movieName);
+            await _semaphore.WaitAsync();
+            try
+            {
+                var movies = await _readAllMovies();
+                return movies.FindIndex(m => m.Caption == movieName);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task<Movie> GetMovie(int index)
         {
-            var movies = await _readAllMovies();
-            return movies[index];
+            await _semaphore.WaitAsync();
+            try
+            {
+                var movies = await _readAllMovies();
+                return movies[index];
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         public async Task UpdateMovie(int index, Movie movie)
         {
-            var movies = await _readAllMovies();
-            movies[index] = movie;
-            await _writeAllMovies(movies);
+            await _semaphore.WaitAsync();
+            try
+            {
+                var movies = await _readAllMovies();
+                movies[index] = movie;
+                await _writeAllMovies(movies);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
+
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
