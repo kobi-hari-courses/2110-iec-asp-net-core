@@ -14,5 +14,7 @@ namespace MoviesApp.Model
         public string Poster { get; set; }
 
         public  string Description { get; set; }
+
+        public int PublicationYear { get; set; }
     }
 }
