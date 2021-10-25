@@ -14,5 +14,6 @@ namespace FunWithEntityFramework.Model
 
         public int Age { get; set; }
 
+
     }
 }

@@ -14,7 +14,7 @@ namespace FunWithEntityFramework
                 //            await context.Database.EnsureCreatedAsync();
 
                 var courses = context
-                    .Courses
+                    .Courses 
                     .Where(c => c.Category.Contains("Prog"))
                     .OrderBy(c => c.DisplayName)
                     .ToList();
