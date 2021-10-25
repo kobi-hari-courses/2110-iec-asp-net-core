@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesApp.Db;
 
 namespace MoviesApp.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211025135514_ActorConstraints")]
+    partial class ActorConstraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,20 +36,6 @@ namespace MoviesApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Actors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("31412b61-1020-41fa-9c3d-fc2cd972d5da"),
-                            FirstName = "Bruce",
-                            LastName = "Willies"
-                        },
-                        new
-                        {
-                            Id = new Guid("31412b61-1020-41fa-9c3d-fc2cd972d5db"),
-                            FirstName = "John",
-                            LastName = "Travolta"
-                        });
                 });
 
             modelBuilder.Entity("MoviesApp.Model.Movie", b =>
